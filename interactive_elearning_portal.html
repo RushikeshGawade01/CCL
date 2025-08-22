@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABC Institute - Interactive E-Learning Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        header {
+            background: linear-gradient(135deg, #004080, #0066cc);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(255,255,255,0.03) 2deg, transparent 4deg);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header p {
+            font-size: 1.2em;
+            position: relative;
+            z-index: 1;
+        }
+
+        nav {
+            background: #f8f9fa;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav a {
+            padding: 15px 25px;
+            text-decoration: none;
+            color: #004080;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        nav a:hover {
+            background: #004080;
+            color: white;
+            border-bottom: 3px solid #0066cc;
+            transform: translateY(-2px);
+        }
+
+        .hero-section {
+            padding: 50px 20px;
+            text-align: center;
+            background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+        }
+
+        .hero-section h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #004080;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .stat-number {
+            font-size: 3em;
+            font-weight: bold;
+            color: #004080;
+            margin-bottom: 10px;
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+
+        .course-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .course-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        .course-header {
+            background: linear-gradient(135deg, #004080, #0066cc);
+            color: white;
+            padding: 20px;
+            position: relative;
+        }
+
+        .course-content {
+            padding: 20px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #28a745, #20c997);
+            border-radius: 4px;
+            transition: width 2s ease;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #004080, #0066cc);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 10px 5px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,64,128,0.3);
+        }
+
+        .features-section {
+            padding: 50px 20px;
+            background: #f8f9fa;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+            color: #004080;
+        }
+
+        .login-form {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 400px;
+            margin: 20px auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #004080;
+        }
+
+        .announcements {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px;
+        }
+
+        .announcement-item {
+            padding: 10px 0;
+            border-bottom: 1px solid #ffeaa7;
+        }
+
+        .announcement-item:last-child {
+            border-bottom: none;
+        }
+
+        footer {
+            background: linear-gradient(135deg, #004080, #0066cc);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #004080;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        .typing-animation {
+            overflow: hidden;
+            border-right: .15em solid #004080;
+            white-space: nowrap;
+            margin: 0 auto;
+            letter-spacing: .15em;
+            animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #004080; }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+            }
+            
+            header h1 {
+                font-size: 2em;
+            }
+            
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>ABC Institute</h1>
+            <p class="typing-animation">Your Gateway to Knowledge</p>
+        </header>
+
+        <nav>
+            <a href="#" onclick="showSection('courses')">Courses</a>
+            <a href="#" onclick="showSection('faculty')">Faculty</a>
+            <a href="#" onclick="showSection('enrollment')">Enrollment</a>
+            <a href="#" onclick="showSection('login')">Student Login</a>
+            <a href="#" onclick="showSection('contact')">Contact Us</a>
+        </nav>
+
+        <div class="hero-section fade-in">
+            <h2>Welcome to the Future of Learning</h2>
+            <p>Experience interactive, engaging, and personalized education at your fingertips</p>
+            <button class="btn" onclick="openModal('enrollModal')">Start Your Journey</button>
+        </div>
+
+        <div class="stats-container">
+            <div class="stat-card fade-in" onclick="animateNumber(this, 2500)">
+                <div class="stat-number" data-target="2500">0</div>
+                <div>Active Students</div>
+            </div>
+            <div class="stat-card fade-in" onclick="animateNumber(this, 150)">
+                <div class="stat-number" data-target="150">0</div>
+                <div>Expert Instructors</div>
+            </div>
+            <div class="stat-card fade-in" onclick="animateNumber(this, 50)">
+                <div class="stat-number" data-target="50">0</div>
+                <div>Courses Available</div>
+            </div>
+            <div class="stat-card fade-in" onclick="animateNumber(this, 98)">
+                <div class="stat-number" data-target="98">0</div>
+                <div>Success Rate %</div>
+            </div>
+        </div>
+
+        <main id="main-content">
+            <div id="courses-section">
+                <h2 style="text-align: center; margin: 30px 0; color: #004080;">Available Courses</h2>
+                
+                <div class="courses-grid">
+                    <div class="course-card">
+                        <div class="course-header">
+                            <h3>Web Development Fundamentals</h3>
+                            <p>Master HTML, CSS, and JavaScript</p>
+                        </div>
+                        <div class="course-content">
+                            <p><strong>Duration:</strong> 12 weeks</p>
+                            <p><strong>Level:</strong> Beginner</p>
+                            <p><strong>Students Enrolled:</strong> 847</p>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 65%"></div>
+                            </div>
+                            <p>Course Progress: 65%</p>
+                            <button class="btn" onclick="openModal('courseModal')">View Details</button>
+                            <button class="btn" onclick="startCourse('web-dev')">Start Learning</button>
+                        </div>
+                    </div>
+
+                    <div class="course-card">
+                        <div class="course-header">
+                            <h3>Data Science with Python</h3>
+                            <p>Analytics, Machine Learning & AI</p>
+                        </div>
+                        <div class="course-content">
+                            <p><strong>Duration:</strong> 16 weeks</p>
+                            <p><strong>Level:</strong> Intermediate</p>
+                            <p><strong>Students Enrolled:</strong> 623</p>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 42%"></div>
+                            </div>
+                            <p>Course Progress: 42%</p>
+                            <button class="btn" onclick="openModal('courseModal')">View Details</button>
+                            <button class="btn" onclick="startCourse('data-science')">Start Learning</button>
+                        </div>
+                    </div>
+
+                    <div class="course-card">
+                        <div class="course-header">
+                            <h3>Cloud Computing Basics</h3>
+                            <p>AWS, Azure, and Google Cloud</p>
+                        </div>
+                        <div class="course-content">
+                            <p><strong>Duration:</strong> 10 weeks</p>
+                            <p><strong>Level:</strong> Beginner</p>
+                            <p><strong>Students Enrolled:</strong> 395</p>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 78%"></div>
+                            </div>
+                            <p>Course Progress: 78%</p>
+                            <button class="btn" onclick="openModal('courseModal')">View Details</button>
+                            <button class="btn" onclick="startCourse('cloud')">Start Learning</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="announcements fade-in">
+                <h3 style="margin-bottom: 20px; color: #856404;">📢 Latest Announcements</h3>
+                <div class="announcement-item">
+                    <strong>New Course Launch:</strong> Advanced React Development - Registration opens March 1st
+                </div>
+                <div class="announcement-item">
+                    <strong>System Maintenance:</strong> Platform will be offline on Feb 25th from 2-4 AM EST
+                </div>
+                <div class="announcement-item">
+                    <strong>Scholarship Alert:</strong> Apply for our Merit Scholarship Program - Deadline March 15th
+                </div>
+            </div>
+
+            <div class="login-form fade-in" id="login-section" style="display: none;">
+                <h3 style="text-align: center; margin-bottom: 20px;">Student Login</h3>
+                <form onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <input type="email" placeholder="Email Address" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="btn" style="width: 100%;">Login</button>
+                </form>
+                <p style="text-align: center; margin-top: 15px;">
+                    <a href="#" onclick="openModal('forgotModal')" style="color: #004080;">Forgot Password?</a>
+                </p>
+            </div>
+        </main>
+
+        <div class="features-section">
+            <h2 style="text-align: center; color: #004080;">Why Choose ABC Institute?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎓</div>
+                    <h3>Expert Instructors</h3>
+                    <p>Learn from industry professionals with years of real-world experience</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Mobile Learning</h3>
+                    <p>Access your courses anytime, anywhere with our mobile-optimized platform</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🏆</div>
+                    <h3>Certificates</h3>
+                    <p>Earn industry-recognized certificates upon course completion</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤝</div>
+                    <h3>Community Support</h3>
+                    <p>Join a vibrant community of learners and get help when you need it</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Interactive Learning</h3>
+                    <p>Engage with hands-on projects, quizzes, and interactive content</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Progress Tracking</h3>
+                    <p>Monitor your learning journey with detailed progress analytics</p>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2025 ABC Institute. All Rights Reserved.</p>
+            <p>Empowering minds, building futures</p>
+        </footer>
+    </div>
+
+    <!-- Modal for Enrollment -->
+    <div id="enrollModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('enrollModal')">&times;</span>
+            <h2>Enroll Now</h2>
+            <p>Ready to start your learning journey? Contact our admissions office or email <strong>admissions@abcinstitute.edu</strong> to get started.</p>
+            <form onsubmit="handleEnrollment(event)">
+                <div class="form-group">
+                    <input type="text" placeholder="Full Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" placeholder="Email Address" required>
+                </div>
+                <div class="form-group">
+                    <input type="tel" placeholder="Phone Number" required>
+                </div>
+                <button type="submit" class="btn">Submit Application</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal for Course Details -->
+    <div id="courseModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('courseModal')">&times;</span>
+            <h2>Course Details</h2>
+            <p>This comprehensive course includes:</p>
+            <ul style="margin: 20px 0;">
+                <li>Interactive video lectures</li>
+                <li>Hands-on coding exercises</li>
+                <li>Real-world projects</li>
+                <li>Peer discussion forums</li>
+                <li>24/7 instructor support</li>
+                <li>Industry certification</li>
+            </ul>
+            <button class="btn" onclick="closeModal('courseModal')">Close</button>
+        </div>
+    </div>
+
+    <!-- Modal for Faculty Details -->
+    <div id="facultyModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('facultyModal')">&times;</span>
+            <h2>Faculty Profile</h2>
+            <p>Detailed information about our expert instructors, their background, teaching methodology, and student reviews.</p>
+            <h4>Teaching Style:</h4>
+            <p>Interactive, project-based learning with real-world applications and industry best practices.</p>
+            <h4>Student Reviews:</h4>
+            <p>⭐⭐⭐⭐⭐ "Exceptional instructor with clear explanations and practical examples"</p>
+            <button class="btn" onclick="closeModal('facultyModal')">Close</button>
+        </div>
+    </div>
+
+    <!-- Modal for Registration -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('registerModal')">&times;</span>
+            <h2>New Student Registration</h2>
+            <form onsubmit="handleRegistration(event)">
+                <div class="form-group">
+                    <input type="text" placeholder="Full Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" placeholder="Email Address" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" placeholder="Create Password" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" placeholder="Confirm Password" required>
+                </div>
+                <button type="submit" class="btn">Create Account</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal for Forgot Password -->
+    <div id="forgotModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('forgotModal')">&times;</span>
+            <h2>Reset Password</h2>
+            <p>Enter your email address and we'll send you a link to reset your password.</p>
+            <form onsubmit="handleForgotPassword(event)">
+                <div class="form-group">
+                    <input type="email" placeholder="Email Address" required>
+                </div>
+                <button type="submit" class="btn">Send Reset Link</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Animation for numbers
+        function animateNumber(card, target) {
+            const numberElement = card.querySelector('.stat-number');
+            let current = 0;
+            const increment = target / 100;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                numberElement.textContent = Math.floor(current);
+            }, 20);
+        }
+
+        // Modal functions
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        }
+
+        // Section navigation
+        function showSection(section) {
+            // Hide all sections
+            const sections = ['courses-section', 'faculty-section', 'enrollment-section', 'login-section', 'contact-section'];
+            sections.forEach(s => {
+                const element = document.getElementById(s);
+                if (element) element.style.display = 'none';
+            });
+
+            // Show selected section
+            const targetSection = document.getElementById(section + '-section');
+            if (targetSection) {
+                targetSection.style.display = 'block';
+                targetSection.classList.add('fade-in');
+            }
+
+            // Update active nav link
+            document.querySelectorAll('nav a').forEach(link => {
+                link.style.background = '';
+                link.style.color = '#004080';
+            });
+            
+            event.target.style.background = '#004080';
+            event.target.style.color = 'white';
+        }
+
+        // Handle course start
+        function startCourse(courseId) {
+            alert(`Starting ${courseId} course! Redirecting to learning dashboard...`);
+        }
+
+        // Handle login
+        function handleLogin(event) {
+            event.preventDefault();
+            alert('Login successful! Redirecting to student dashboard...');
+        }
+
+        // Handle enrollment
+        function handleEnrollment(event) {
+            event.preventDefault();
+            alert('Application submitted successfully! We will contact you within 24 hours.');
+            closeModal('enrollModal');
+        }
+
+        // Handle registration
+        function handleRegistration(event) {
+            event.preventDefault();
+            alert('Account created successfully! Please check your email for verification.');
+            closeModal('registerModal');
+        }
+
+        // Handle forgot password
+        function handleForgotPassword(event) {
+            event.preventDefault();
+            alert('Password reset link sent! Please check your email.');
+            closeModal('forgotModal');
+        }
+
+        // Handle contact form
+        function handleContact(event) {
+            event.preventDefault();
+            alert('Message sent successfully! We will get back to you within 24 hours.');
+        }
+
+        // Initialize animations on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate progress bars
+            setTimeout(() => {
+                const progressBars = document.querySelectorAll('.progress-fill');
+                progressBars.forEach(bar => {
+                    const width = bar.style.width;
+                    bar.style.width = '0%';
+                    setTimeout(() => {
+                        bar.style.width = width;
+                    }, 500);
+                });
+            }, 1000);
+
+            // Add fade-in animation to elements
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in');
+                    }
+                });
+            });
+
+            document.querySelectorAll('.course-card, .feature-card').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
